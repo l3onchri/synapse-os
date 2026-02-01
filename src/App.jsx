@@ -575,7 +575,7 @@ const PaymentModal = () => {
     if (showPayment && SYSTEM_CONFIG.STRIPE_KEY) {
       // Fetch fetch client secret from our local node server
       console.log("Fetching Payment Intent...");
-      fetch('http://localhost:4242/create-payment-intent', {
+      fetch('https://l3onchri-synapse-backend.hf.space/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       })
