@@ -1,5 +1,5 @@
 ---
-title: Sinapsi Backend
+title: Synapse Backend
 emoji: 🧠
 colorFrom: purple
 colorTo: blue
@@ -8,7 +8,7 @@ pinned: false
 app_port: 7860
 ---
 
-# Sinapsi OS Backend
+# Synapse OS Backend
 
-Node.js + Express + Stripe Backend for Sinapsi OS.
+Node.js + Express + Stripe Backend for Synapse OS.
 This space handles payment intent creation secrets.

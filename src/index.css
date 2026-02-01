@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 /* ============================================
-   SINAPSI OS - Neural Glass Design System
+   SYNAPSE OS - Neural Glass Design System
    ============================================ */
 
 :root {
   /* Deep Space Palette */
-  --sinapsi-void: #030014;
-  --sinapsi-deep: #020617;
-  --sinapsi-surface: #0f172a;
+  --synapse-void: #030014;
+  --synapse-deep: #020617;
+  --synapse-surface: #0f172a;
 
   /* Neon Accent Colors */
-  --sinapsi-violet: #8B5CF6;
-  --sinapsi-violet-glow: rgba(139, 92, 246, 0.5);
-  --sinapsi-cyan: #06B6D4;
-  --sinapsi-cyan-glow: rgba(6, 182, 212, 0.5);
-  --sinapsi-rose: #F43F5E;
-  --sinapsi-rose-glow: rgba(244, 63, 94, 0.5);
+  --synapse-violet: #8B5CF6;
+  --synapse-violet-glow: rgba(139, 92, 246, 0.5);
+  --synapse-cyan: #06B6D4;
+  --synapse-cyan-glow: rgba(6, 182, 212, 0.5);
+  --synapse-rose: #F43F5E;
+  --synapse-rose-glow: rgba(244, 63, 94, 0.5);
 
   /* Neutral */
-  --sinapsi-zinc: #e4e4e7;
-  --sinapsi-dark: #18181b;
+  --synapse-zinc: #e4e4e7;
+  --synapse-dark: #18181b;
 
   /* Fonts */
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -44,8 +44,8 @@
 
   body {
     font-family: var(--font-display);
-    background: radial-gradient(ellipse at 50% 0%, var(--sinapsi-surface) 0%, var(--sinapsi-deep) 50%, var(--sinapsi-void) 100%);
-    color: var(--sinapsi-zinc);
+    background: radial-gradient(ellipse at 50% 0%, var(--synapse-surface) 0%, var(--synapse-deep) 50%, var(--synapse-void) 100%);
+    color: var(--synapse-zinc);
     overflow-x: hidden;
     line-height: 1.6;
     min-height: 100vh;
@@ -71,17 +71,17 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--sinapsi-void);
+    background: var(--synapse-void);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--sinapsi-violet), var(--sinapsi-cyan));
+    background: linear-gradient(180deg, var(--synapse-violet), var(--synapse-cyan));
     border-radius: 2px;
   }
 
   /* Selection */
   ::selection {
-    background: var(--sinapsi-violet);
+    background: var(--synapse-violet);
     color: white;
   }
 }
@@ -165,19 +165,19 @@
      ============================================ */
 
   .gradient-text {
-    background: linear-gradient(135deg, var(--sinapsi-violet) 0%, var(--sinapsi-cyan) 100%);
+    background: linear-gradient(135deg, var(--synapse-violet) 0%, var(--synapse-cyan) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .gradient-bg {
-    background: linear-gradient(135deg, var(--sinapsi-violet) 0%, var(--sinapsi-cyan) 100%);
+    background: linear-gradient(135deg, var(--synapse-violet) 0%, var(--synapse-cyan) 100%);
   }
 
   .gradient-border {
     position: relative;
-    background: var(--sinapsi-void);
+    background: var(--synapse-void);
   }
 
   .gradient-border::before {
@@ -186,7 +186,7 @@
     inset: 0;
     padding: 1px;
     border-radius: inherit;
-    background: linear-gradient(135deg, var(--sinapsi-violet), var(--sinapsi-cyan));
+    background: linear-gradient(135deg, var(--synapse-violet), var(--synapse-cyan));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -199,33 +199,33 @@
 
   .glow-violet {
     box-shadow:
-      0 0 20px var(--sinapsi-violet-glow),
+      0 0 20px var(--synapse-violet-glow),
       0 0 40px rgba(139, 92, 246, 0.3),
       0 0 60px rgba(139, 92, 246, 0.15);
   }
 
   .glow-cyan {
     box-shadow:
-      0 0 20px var(--sinapsi-cyan-glow),
+      0 0 20px var(--synapse-cyan-glow),
       0 0 40px rgba(6, 182, 212, 0.3);
   }
 
   .glow-rose {
     box-shadow:
-      0 0 20px var(--sinapsi-rose-glow),
+      0 0 20px var(--synapse-rose-glow),
       0 0 40px rgba(244, 63, 94, 0.3);
   }
 
   .text-glow {
     text-shadow:
-      0 0 20px var(--sinapsi-violet-glow),
+      0 0 20px var(--synapse-violet-glow),
       0 0 40px rgba(139, 92, 246, 0.3),
       0 0 80px rgba(6, 182, 212, 0.2);
   }
 
   .text-glow-cyan {
     text-shadow:
-      0 0 20px var(--sinapsi-cyan-glow),
+      0 0 20px var(--synapse-cyan-glow),
       0 0 40px rgba(6, 182, 212, 0.3);
   }
 
@@ -234,35 +234,35 @@
      ============================================ */
 
   .text-violet {
-    color: var(--sinapsi-violet);
+    color: var(--synapse-violet);
   }
 
   .text-cyan {
-    color: var(--sinapsi-cyan);
+    color: var(--synapse-cyan);
   }
 
   .text-rose {
-    color: var(--sinapsi-rose);
+    color: var(--synapse-rose);
   }
 
   .text-zinc {
-    color: var(--sinapsi-zinc);
+    color: var(--synapse-zinc);
   }
 
   .bg-void {
-    background-color: var(--sinapsi-void);
+    background-color: var(--synapse-void);
   }
 
   .bg-dark {
-    background-color: var(--sinapsi-dark);
+    background-color: var(--synapse-dark);
   }
 
   .border-violet {
-    border-color: var(--sinapsi-violet);
+    border-color: var(--synapse-violet);
   }
 
   .border-cyan {
-    border-color: var(--sinapsi-cyan);
+    border-color: var(--synapse-cyan);
   }
 
   /* ============================================
@@ -288,7 +288,7 @@
 
   .animate-typewriter {
     overflow: hidden;
-    border-right: 2px solid var(--sinapsi-cyan);
+    border-right: 2px solid var(--synapse-cyan);
     white-space: nowrap;
     animation:
       typing 3.5s steps(40, end),
@@ -374,13 +374,13 @@
   0%,
   100% {
     box-shadow:
-      0 0 20px var(--sinapsi-violet-glow),
+      0 0 20px var(--synapse-violet-glow),
       0 0 40px rgba(139, 92, 246, 0.2);
   }
 
   50% {
     box-shadow:
-      0 0 30px var(--sinapsi-violet-glow),
+      0 0 30px var(--synapse-violet-glow),
       0 0 60px rgba(139, 92, 246, 0.4),
       0 0 80px rgba(6, 182, 212, 0.2);
   }
@@ -414,7 +414,7 @@
   }
 
   50% {
-    border-color: var(--sinapsi-cyan);
+    border-color: var(--synapse-cyan);
   }
 }
 
@@ -521,7 +521,7 @@
 
 .hud-line {
   position: absolute;
-  background: linear-gradient(90deg, transparent 0%, var(--sinapsi-violet) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, var(--synapse-violet) 50%, transparent 100%);
   height: 1px;
   opacity: 0.3;
 }
@@ -593,9 +593,9 @@
 }
 
 .input-hud:focus {
-  border-color: var(--sinapsi-violet);
+  border-color: var(--synapse-violet);
   box-shadow:
-    0 0 20px var(--sinapsi-violet-glow),
+    0 0 20px var(--synapse-violet-glow),
     inset 0 0 20px rgba(139, 92, 246, 0.05);
   outline: none;
 }
