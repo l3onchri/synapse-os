@@ -1293,9 +1293,34 @@ const PricingSection = () => {
 // PRO DASHBOARD (Interfaccia Dedicata Pro)
 // ============================================
 const ProDashboard = () => {
-  const { userData, setCurrentView } = useUser();
-  const SYSTEM_VERSION = "v1.0.4 (Patch: Chart & Videos)";
+  const { userData, setCurrentView, setUserData } = useUser();
+  const SYSTEM_VERSION = "v1.0.6 (Patch: State Migration)";
   const [activeTab, setActiveTab] = useState('overview');
+
+  // STATE MIGRATION: Force update video queue and fix history for existing users
+  useEffect(() => {
+    const migrated = localStorage.getItem('synapse_migrated_v1_0_6');
+    if (!migrated) {
+      // Clean up video queue
+      const safeQueue = [
+        { id: '2U_YdZD5kkM', title: 'Napoleone Bonaparte', duration: '18:00' },
+        { id: 'Y9EjnBmO2Jw', title: 'I Principi della Dinamica', duration: '10:00' }
+      ];
+      setVideoQueue(safeQueue);
+
+      // Ensure history exists
+      setUserData(prev => ({
+        ...prev,
+        history: prev.history || [], // Ensure array
+        planner: prev.planner || [],
+        // Force a re-save of hours if missing
+        hours: prev.hours || 0
+      }));
+
+      localStorage.setItem('synapse_migrated_v1_0_6', 'true');
+      console.log("State Migration Applied: Video Queue Reset");
+    }
+  }, []);
   const [isListening, setIsListening] = useState(false);
   const [voiceQuery, setVoiceQuery] = useState('');
   const [memoryCards, setMemoryCards] = useState([]);
