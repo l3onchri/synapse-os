@@ -1577,7 +1577,7 @@ const ProDashboard = () => {
                   {['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((d, i) => {
                     // Distribute total hours roughly across week for viz
                     const avgDaily = userData.hours / 7;
-                    // Scale up significantly for visibility. If > 0, ensure at least 20% height.
+                    // Scale up significantly for visibility. If > 0, ensure at least 20% height. (v2 fix)
                     const h = userData.hours > 0 ? Math.min(100, (avgDaily * 30) + 15 + (Math.random() * 10)) : 4;
                     return (<div key={d} className="flex-1 flex flex-col items-center gap-2">
                       <div className="w-full bg-slate-800 rounded-t transition-all duration-1000" style={{ height: `${h || 2}%`, background: `linear-gradient(to top, #8b5cf6, #06b6d4)` }} />
