@@ -1293,8 +1293,8 @@ const PricingSection = () => {
 // PRO DASHBOARD (Interfaccia Dedicata Pro)
 // ============================================
 const ProDashboard = () => {
-  const { userData, setCurrentView, setUserData } = useUser();
-  const SYSTEM_VERSION = "v1.0.6 (Patch: State Migration)";
+  const { userData, setCurrentView, setUserData }  // Platform Logic
+  const SYSTEM_VERSION = "v1.0.7 (Patch: FINAL FORCE)";
   const [activeTab, setActiveTab] = useState('overview');
 
   // STATE MIGRATION: Force update video queue and fix history for existing users
