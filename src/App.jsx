@@ -18,6 +18,8 @@ const SYSTEM_CONFIG = {
   STRIPE_KEY: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
 };
 
+const SYSTEM_VERSION = "v1.1.0 (Stable)";
+
 import { supabase } from './lib/supabase';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -726,16 +728,7 @@ const VIDEO_DATABASE = {
     }
   },
   // REMOVED: Dante Alighieri & Sistema Solare as requested
-  'matematica': {
-    id: '?listType=search&list=Equazioni+Primo+Grado+Spiegazione',
-    title: 'Equazioni Lineari (Algebra)',
-    summary: "CONCETTO: Uguaglianza tra due espressioni verificata solo per certi valori (soluzioni). \nRISOLUZIONE: L'obiettivo è isolare la 'x'. \nPRINCIPI: \n1. Sommando/sottraendo la stessa quantità a entrambi i membri, il risultato non cambia. \n2. Moltiplicando/dividendo entrambi i membri per uno stesso numero (diverso da 0), l'equazione resta equivalente.",
-    quiz: {
-      question: "Qual è il primo passaggio per risolvere 2x + 5 = 15?",
-      options: [{ text: "Dividere tutto per 2", correct: false }, { text: "Sottrarre 5 da entrambi i lati", correct: true }, { text: "Moltiplicare per x", correct: false }],
-      hint: "Devi isolare il termine con la x spostando i numeri."
-    }
-  },
+  // REMOVED: Equazioni Lineari as requested
   'italiano': {
     id: 'fESdidM5j7s',
     title: 'La Divina Commedia in 10 minuti',
@@ -1289,7 +1282,7 @@ const ProDashboard = () => {
   const { userData, setCurrentView, setUserData } = useUser();
   // Platform Logic
   // Platform Logic
-  const SYSTEM_VERSION = "v1.0.9 (Patch: REMOVED DEBUG)";
+  // SYSTEM_VERSION is now global to fix ReferenceError
   const [activeTab, setActiveTab] = useState('overview');
 
   // STATE MIGRATION: Force update video queue and fix history for existing users
@@ -1427,6 +1420,7 @@ const ProDashboard = () => {
 
 
   const searchVideo = async () => {
+    addHours(0.1); // Track activity for search
     if (!videoTopic.trim()) return;
     setVideoSearching(true);
 
@@ -1708,7 +1702,7 @@ const ProDashboard = () => {
                   <h3 className="text-white font-bold mb-4">Coda Suggerita</h3>
                   <div className="space-y-3">
                     {Object.entries(VIDEO_DATABASE).slice(0, 4).map(([key, video], i) => (
-                      <div key={i} onClick={() => setCurrentVideo({ ...video, topic: key })}
+                      <div key={i} onClick={() => { setCurrentVideo({ ...video, topic: key }); addHours(0.1); }}
                         className="flex items-center gap-3 p-3 bg-slate-800/30 rounded-lg hover:bg-slate-700/30 cursor-pointer transition-all">
                         <Play className="w-4 h-4 text-[#06b6d4]" />
                         <span className="text-slate-300 text-sm line-clamp-1">{video.title}</span>
