@@ -1,0 +1,615 @@
+@import "tailwindcss";
+
+/* ============================================
+   SYNAPSE OS - Neural Glass Design System
+   ============================================ */
+
+:root {
+  /* Deep Space Palette */
+  --synapse-void: #030014;
+  --synapse-deep: #020617;
+  --synapse-surface: #0f172a;
+
+  /* Neon Accent Colors */
+  --synapse-violet: #8B5CF6;
+  --synapse-violet-glow: rgba(139, 92, 246, 0.5);
+  --synapse-cyan: #06B6D4;
+  --synapse-cyan-glow: rgba(6, 182, 212, 0.5);
+  --synapse-rose: #F43F5E;
+  --synapse-rose-glow: rgba(244, 63, 94, 0.5);
+
+  /* Neutral */
+  --synapse-zinc: #e4e4e7;
+  --synapse-dark: #18181b;
+
+  /* Fonts */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-display);
+    background: radial-gradient(ellipse at 50% 0%, var(--synapse-surface) 0%, var(--synapse-deep) 50%, var(--synapse-void) 100%);
+    color: var(--synapse-zinc);
+    overflow-x: hidden;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Digital Noise Overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--synapse-void);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--synapse-violet), var(--synapse-cyan));
+    border-radius: 2px;
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--synapse-violet);
+    color: white;
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.text-headline {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.text-terminal {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   GLASSMORPHISM 2.0
+   ============================================ */
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .glass-panel {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Spotlight border effect */
+  .glass-spotlight {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .glass-spotlight:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow:
+      0 0 30px rgba(139, 92, 246, 0.15),
+      0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ============================================
+     GRADIENTS & COLORS
+     ============================================ */
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--synapse-violet) 0%, var(--synapse-cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--synapse-violet) 0%, var(--synapse-cyan) 100%);
+  }
+
+  .gradient-border {
+    position: relative;
+    background: var(--synapse-void);
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, var(--synapse-violet), var(--synapse-cyan));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  /* ============================================
+     GLOW EFFECTS
+     ============================================ */
+
+  .glow-violet {
+    box-shadow:
+      0 0 20px var(--synapse-violet-glow),
+      0 0 40px rgba(139, 92, 246, 0.3),
+      0 0 60px rgba(139, 92, 246, 0.15);
+  }
+
+  .glow-cyan {
+    box-shadow:
+      0 0 20px var(--synapse-cyan-glow),
+      0 0 40px rgba(6, 182, 212, 0.3);
+  }
+
+  .glow-rose {
+    box-shadow:
+      0 0 20px var(--synapse-rose-glow),
+      0 0 40px rgba(244, 63, 94, 0.3);
+  }
+
+  .text-glow {
+    text-shadow:
+      0 0 20px var(--synapse-violet-glow),
+      0 0 40px rgba(139, 92, 246, 0.3),
+      0 0 80px rgba(6, 182, 212, 0.2);
+  }
+
+  .text-glow-cyan {
+    text-shadow:
+      0 0 20px var(--synapse-cyan-glow),
+      0 0 40px rgba(6, 182, 212, 0.3);
+  }
+
+  /* ============================================
+     COLOR UTILITIES
+     ============================================ */
+
+  .text-violet {
+    color: var(--synapse-violet);
+  }
+
+  .text-cyan {
+    color: var(--synapse-cyan);
+  }
+
+  .text-rose {
+    color: var(--synapse-rose);
+  }
+
+  .text-zinc {
+    color: var(--synapse-zinc);
+  }
+
+  .bg-void {
+    background-color: var(--synapse-void);
+  }
+
+  .bg-dark {
+    background-color: var(--synapse-dark);
+  }
+
+  .border-violet {
+    border-color: var(--synapse-violet);
+  }
+
+  .border-cyan {
+    border-color: var(--synapse-cyan);
+  }
+
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background-size: 200% 100%;
+  }
+
+  .animate-typewriter {
+    overflow: hidden;
+    border-right: 2px solid var(--synapse-cyan);
+    white-space: nowrap;
+    animation:
+      typing 3.5s steps(40, end),
+      blink-caret 0.75s step-end infinite;
+  }
+
+  .animate-scan {
+    animation: scan 8s linear infinite;
+  }
+
+  .animate-ripple {
+    animation: ripple 0.6s ease-out;
+  }
+
+  .animate-node-pulse {
+    animation: node-pulse 3s ease-in-out infinite;
+  }
+
+  /* Fade In Up */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger delays */
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px var(--synapse-violet-glow),
+      0 0 40px rgba(139, 92, 246, 0.2);
+  }
+
+  50% {
+    box-shadow:
+      0 0 30px var(--synapse-violet-glow),
+      0 0 60px rgba(139, 92, 246, 0.4),
+      0 0 80px rgba(6, 182, 212, 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+
+  from,
+  to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: var(--synapse-cyan);
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes node-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes hud-flicker {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: 1;
+  }
+
+  93% {
+    opacity: 0.3;
+  }
+
+  94% {
+    opacity: 1;
+  }
+
+  96% {
+    opacity: 0.5;
+  }
+
+  97% {
+    opacity: 1;
+  }
+}
+
+@keyframes border-glow {
+
+  0%,
+  100% {
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+
+  50% {
+    border-color: rgba(139, 92, 246, 0.6);
+  }
+}
+
+/* ============================================
+   3D PERSPECTIVE SYSTEM
+   ============================================ */
+
+.perspective-container {
+  perspective: 1000px;
+  perspective-origin: center;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.card-3d {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-3d:hover {
+  transform: translateZ(20px) rotateX(2deg) rotateY(-2deg);
+}
+
+/* ============================================
+   HUD ELEMENTS
+   ============================================ */
+
+.hud-line {
+  position: absolute;
+  background: linear-gradient(90deg, transparent 0%, var(--synapse-violet) 50%, transparent 100%);
+  height: 1px;
+  opacity: 0.3;
+}
+
+.hud-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: rgba(139, 92, 246, 0.4);
+  border-style: solid;
+}
+
+.hud-corner-tl {
+  top: 20px;
+  left: 20px;
+  border-width: 1px 0 0 1px;
+}
+
+.hud-corner-tr {
+  top: 20px;
+  right: 20px;
+  border-width: 1px 1px 0 0;
+}
+
+.hud-corner-bl {
+  bottom: 20px;
+  left: 20px;
+  border-width: 0 0 1px 1px;
+}
+
+.hud-corner-br {
+  bottom: 20px;
+  right: 20px;
+  border-width: 0 1px 1px 0;
+}
+
+/* ============================================
+   INTERACTIVE ELEMENTS
+   ============================================ */
+
+.btn-neon {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-neon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-neon:hover::before {
+  opacity: 1;
+}
+
+.btn-neon:active {
+  transform: scale(0.98);
+}
+
+/* Input HUD Style */
+.input-hud {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  transition: all 0.3s ease;
+}
+
+.input-hud:focus {
+  border-color: var(--synapse-violet);
+  box-shadow:
+    0 0 20px var(--synapse-violet-glow),
+    inset 0 0 20px rgba(139, 92, 246, 0.05);
+  outline: none;
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+
+@media (max-width: 768px) {
+  .text-headline {
+    letter-spacing: -0.02em;
+  }
+
+  .hud-corner {
+    display: none;
+  }
+}
