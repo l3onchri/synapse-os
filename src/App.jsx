@@ -1081,6 +1081,10 @@ const CoreSimulator = () => {
                     <div className="text-slate-500 text-xs mt-1">{x.duration}</div>
                   </div>
                 ))}</div>
+                <div className="mt-8 pt-8 border-t border-slate-800 text-center">
+                  <p className="text-slate-500 text-xs text-center font-mono">SYNAPSE OS {SYSTEM_VERSION}</p>
+                  <p className="text-slate-600 text-[10px] mt-1">Global Neural Network Active</p>
+                </div>
               </HUDCard>
 
               {/* Summary Card (NEW) */}
@@ -1290,6 +1294,7 @@ const PricingSection = () => {
 // ============================================
 const ProDashboard = () => {
   const { userData, setCurrentView } = useUser();
+  const SYSTEM_VERSION = "v1.0.4 (Patch: Chart & Videos)";
   const [activeTab, setActiveTab] = useState('overview');
   const [isListening, setIsListening] = useState(false);
   const [voiceQuery, setVoiceQuery] = useState('');
