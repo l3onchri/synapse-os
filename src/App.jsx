@@ -68,7 +68,7 @@ class ErrorBoundary extends React.Component {
 // ============================================
 const UserContext = createContext();
 
-const STORAGE_KEY = 'synapse_user_data';
+const STORAGE_KEY = 'sinapsi_user_data';
 
 const getStoredData = () => {
   try {
@@ -93,11 +93,11 @@ const UserProvider = ({ children }) => {
 
   // Daily credit reset for Core
   useEffect(() => {
-    const lastReset = localStorage.getItem('synapse_credit_reset');
+    const lastReset = localStorage.getItem('sinapsi_credit_reset');
     const today = new Date().toDateString();
     if (protocol === 'CORE' && lastReset !== today) {
       setCredits(5);
-      localStorage.setItem('synapse_credit_reset', today);
+      localStorage.setItem('sinapsi_credit_reset', today);
     }
   }, [protocol]);
 
@@ -108,10 +108,10 @@ const UserProvider = ({ children }) => {
     if (!supabase) return;
     const checkUser = (session) => {
       // Check for Dev Bypass
-      const isBypass = localStorage.getItem('synapse_dev_bypass') === 'true';
+      const isBypass = localStorage.getItem('sinapsi_dev_bypass') === 'true';
       if (isBypass) {
         setProtocol('PRO');
-        setUserData(p => ({ ...p, name: 'Sviluppatore (Force)', email: 'dev@synapse.os' }));
+        setUserData(p => ({ ...p, name: 'Sviluppatore (Force)', email: 'dev@sinapsi.os' }));
         return;
       }
 
@@ -158,7 +158,7 @@ const UserProvider = ({ children }) => {
   const logout = async () => {
     if (supabase) await supabase.auth.signOut();
     localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem('synapse_dev_bypass'); // Clear the bypass flag
+    localStorage.removeItem('sinapsi_dev_bypass'); // Clear the bypass flag
     setProtocol('GUEST');
     setSession(null);
     setCurrentView('LANDING');
@@ -257,7 +257,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Brain className="w-8 h-8 text-[#8b5cf6]" />
-          <span className="text-2xl font-black text-white tracking-widest">SYNAPSE</span>
+          <span className="text-2xl font-black text-white tracking-widest">SINAPSI</span>
         </div>
 
         {protocol === 'GUEST' ? (
@@ -386,7 +386,7 @@ const SystemHeader = () => {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Brain className="w-7 h-7 text-[#8b5cf6]" strokeWidth={1.5} />
-          <GlitchText className="text-xl font-black text-white">SYNAPSE <span className="text-[#06b6d4] animate-pulse">[OS]</span></GlitchText>
+          <GlitchText className="text-xl font-black text-white">SINAPSI <span className="text-[#06b6d4] animate-pulse">[OS]</span></GlitchText>
         </div>
         <div className="flex items-center gap-2 md:gap-6">
           <div className="hidden md:flex items-center gap-2 font-mono text-xs uppercase text-[#10b981]"><Wifi className="w-3 h-3" /> RETE: SICURA</div>
@@ -475,7 +475,7 @@ const AuthModal = () => {
           <User className="w-6 h-6 text-[#06b6d4]" /> {isLogin ? 'ACCESSO NEURALE' : 'CREA IDENTITÀ'}
         </h2>
         <p className="text-slate-400 text-sm mb-6 font-mono">
-          {isLogin ? 'Bentornato nel sistema, Operatore.' : 'Registrati per avviare il protocollo Synapse.'}
+          {isLogin ? 'Bentornato nel sistema, Operatore.' : 'Registrati per avviare il protocollo Sinapsi.'}
         </p>
 
         {error && <div className="p-3 bg-red-500/20 border border-red-500/50 rounded mb-4 text-red-200 text-xs font-mono">{error}</div>}
@@ -896,14 +896,14 @@ const CoreSimulator = () => {
             "Authorization": `Bearer ${SYSTEM_CONFIG.OPENROUTER_KEY}`,
             "Content-Type": "application/json",
             "HTTP-Referer": "https://www.sinapsi-os.lat",
-            "X-Title": "Synapse OS"
+            "X-Title": "Sinapsi OS"
           },
           body: JSON.stringify({
             "model": "google/gemini-2.0-flash-001",
             "messages": [
               {
                 "role": "system",
-                "content": "You are Synapse OS, an advanced education interface. Analyze the user topic and return a STRICT JSON object (no markdown). Structure: { \"summary\": \"Comprehensive summary (8-10 sentences).\", \"notes\": [\"Point 1\", \"Point 2\", \"Point 3\"], \"videoSearchQuery\": \"${topic} documentario scuola\", \"quiz\": [ { \"question\": \"Q1?\", \"options\": [{\"text\":\"A\",\"correct\":false}, {\"text\":\"B\",\"correct\":true}, {\"text\":\"C\",\"correct\":false}], \"hint\": \"H1\" }, { \"question\": \"Q2?\", \"options\": [...], \"hint\": \"...\" }, { \"question\": \"Q3?\", \"options\": [...], \"hint\": \"...\" }, { \"question\": \"Q4?\", \"options\": [...], \"hint\": \"...\" }, { \"question\": \"Q5?\", \"options\": [...], \"hint\": \"...\" } ], \"planner\": [{\"time\":\"15:00\",\"task\":\"Deep Work\",\"details\":\"Study concept X and Y\",\"duration\":\"45m\"},{\"time\":\"16:00\",\"task\":\"Review\",\"details\":\"Test knowledge\",\"duration\":\"30m\"}] }. Notes: Quiz MUST have exactly 5 questions. Each question MUST have 3 options. Language: ITALIAN."
+                "content": "You are Sinapsi OS, an advanced education interface. Analyze the user topic and return a STRICT JSON object (no markdown). Structure: { \"summary\": \"Comprehensive summary (8-10 sentences).\", \"notes\": [\"Point 1\", \"Point 2\", \"Point 3\"], \"videoSearchQuery\": \"${topic} documentario scuola\", \"quiz\": [ { \"question\": \"Q1?\", \"options\": [{\"text\":\"A\",\"correct\":false}, {\"text\":\"B\",\"correct\":true}, {\"text\":\"C\",\"correct\":false}], \"hint\": \"H1\" }, { \"question\": \"Q2?\", \"options\": [...], \"hint\": \"...\" }, { \"question\": \"Q3?\", \"options\": [...], \"hint\": \"...\" }, { \"question\": \"Q4?\", \"options\": [...], \"hint\": \"...\" }, { \"question\": \"Q5?\", \"options\": [...], \"hint\": \"...\" } ], \"planner\": [{\"time\":\"15:00\",\"task\":\"Deep Work\",\"details\":\"Study concept X and Y\",\"duration\":\"45m\"},{\"time\":\"16:00\",\"task\":\"Review\",\"details\":\"Test knowledge\",\"duration\":\"30m\"}] }. Notes: Quiz MUST have exactly 5 questions. Each question MUST have 3 options. Language: ITALIAN."
               },
               {
                 "role": "user",
@@ -1275,14 +1275,14 @@ const ProDashboard = () => {
           "Authorization": `Bearer ${SYSTEM_CONFIG.OPENROUTER_KEY}`,
           "Content-Type": "application/json",
           "HTTP-Referer": "https://www.sinapsi-os.lat",
-          "X-Title": "Synapse OS"
+          "X-Title": "Sinapsi OS"
         },
         body: JSON.stringify({
           "model": "google/gemini-2.0-flash-001",
           "messages": [
             {
               "role": "system",
-              "content": "You are Synapse OS. Analyze the topic and return a STRICT JSON array of 3 objects: [{ \"id\": 1, \"front\": \"Question?\", \"back\": \"Answer\", \"mastery\": 0 }]. Limit answers to 5 words max. Language: ITALIAN."
+              "content": "You are Sinapsi OS. Analyze the topic and return a STRICT JSON array of 3 objects: [{ \"id\": 1, \"front\": \"Question?\", \"back\": \"Answer\", \"mastery\": 0 }]. Limit answers to 5 words max. Language: ITALIAN."
             },
             { role: 'user', content: `Topic: ${cardTopic}` }
           ]
@@ -1316,7 +1316,7 @@ const ProDashboard = () => {
 
   // Support Chat State
   const [chatMessages, setChatMessages] = useState([
-    { role: 'system', content: 'Synapse Support Agent Online. Come posso aiutarti oggi?' }
+    { role: 'system', content: 'Sinapsi Support Agent Online. Come posso aiutarti oggi?' }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -1337,14 +1337,14 @@ const ProDashboard = () => {
           "Authorization": `Bearer ${SYSTEM_CONFIG.OPENROUTER_KEY}`,
           "Content-Type": "application/json",
           "HTTP-Referer": "https://www.sinapsi-os.lat",
-          "X-Title": "Synapse OS"
+          "X-Title": "Sinapsi OS"
         },
         body: JSON.stringify({
           "model": "google/gemini-2.0-flash-001",
           "messages": [
             {
               "role": "system",
-              "content": "You are Synapse Support, a helpful AI assistant for the Synapse OS platform. Answer questions about the app (Time Dilation, Signal Filters, Memory Lock), subscription (Pro is 9.99/mo), or general technical support. Be concise, professional, and use a futuristic tone. Language: ITALIAN."
+              "content": "You are Sinapsi Support, a helpful AI assistant for the Sinapsi OS platform. Answer questions about the app (Time Dilation, Signal Filters, Memory Lock), subscription (Pro is 9.99/mo), or general technical support. Be concise, professional, and use a futuristic tone. Language: ITALIAN."
             },
             ...chatMessages.map(m => ({ role: m.role === 'system' ? 'assistant' : m.role, content: m.content })),
             { role: 'user', content: userMsg }
@@ -1386,14 +1386,14 @@ const ProDashboard = () => {
           "Authorization": `Bearer ${SYSTEM_CONFIG.OPENROUTER_KEY}`,
           "Content-Type": "application/json",
           "HTTP-Referer": "https://www.sinapsi-os.lat",
-          "X-Title": "Synapse OS"
+          "X-Title": "Sinapsi OS"
         },
         body: JSON.stringify({
           "model": "google/gemini-2.0-flash-001",
           "messages": [
             {
               "role": "system",
-              "content": "You are Synapse OS. Analyze the topic and return a STRICT JSON: { \"videoSearchQuery\": \"optimized youtube search query for topic\", \"title\": \"Formal Title of the topic\" }. Language: ITALIAN."
+              "content": "You are Sinapsi OS. Analyze the topic and return a STRICT JSON: { \"videoSearchQuery\": \"optimized youtube search query for topic\", \"title\": \"Formal Title of the topic\" }. Language: ITALIAN."
             },
             { "role": "user", "content": `Topic: ${videoTopic}` }
           ]
@@ -1721,7 +1721,7 @@ const ProDashboard = () => {
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 bg-[#8b5cf6]/20 rounded-full flex items-center justify-center"><Mail className="w-6 h-6 text-[#8b5cf6]" /></div>
                   <div>
-                    <div className="text-white font-bold">Report Settimanale - Synapse OS</div>
+                    <div className="text-white font-bold">Report Settimanale - Sinapsi OS</div>
                     <div className="text-xs text-slate-500">Inviato ogni Domenica alle 20:00</div>
                   </div>
                 </div>
@@ -1799,8 +1799,8 @@ const SystemFooter = () => (
         <div><div className="text-slate-400 mb-1">STATO</div><div className="text-[#10b981] flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />OPERATIVO</div></div>
       </div>
       <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2"><Brain className="w-5 h-5 text-[#8b5cf6]" strokeWidth={1.5} /><GlitchText className="text-white font-bold">SYNAPSE</GlitchText><span className="text-[#06b6d4]">[OS]</span></div>
-        <div className="font-mono text-xs text-slate-500">COPYRIGHT © 2026 SYNAPSE CORP. TUTTI I DIRITTI RISERVATI.</div>
+        <div className="flex items-center gap-2"><Brain className="w-5 h-5 text-[#8b5cf6]" strokeWidth={1.5} /><GlitchText className="text-white font-bold">SINAPSI</GlitchText><span className="text-[#06b6d4]">[OS]</span></div>
+        <div className="font-mono text-xs text-slate-500">COPYRIGHT © 2026 SINAPSI CORP. TUTTI I DIRITTI RISERVATI.</div>
         <div className="font-mono text-xs text-slate-500 flex items-center gap-2"><Shield className="w-3 h-3 text-[#8b5cf6]" strokeWidth={1.5} />RETE NEURALE PROTETTA</div>
       </div>
     </div>
