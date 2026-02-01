@@ -739,16 +739,7 @@ const VIDEO_DATABASE = {
       hint: "Il sommo poeta latino autore dell'Eneide."
     }
   },
-  'inglese': {
-    id: 'M2K-kM2i_tQ',
-    title: 'Inglese: Basi Fondamentali',
-    summary: "GRAMMATICA BASE: \n1. Verbo To Be (Essere): I am, You are, He is. \n2. Ordine parole: Subject + Verb + Object (SVO). \n3. Present Simple: Per abitudini e verità generali (Add 's' for he/she/it). \nCONSIGLIO: La pratica dell'ascolto (listening) è cruciale quanto la grammatica.",
-    quiz: {
-      question: "Qual è la forma corretta?",
-      options: [{ text: "He go to school", correct: false }, { text: "He goes to school", correct: true }, { text: "He going to school", correct: false }],
-      hint: "Terza persona singolare richiede la 's' o 'es'."
-    }
-  },
+  // REMOVED: Inglese as requested
 };
 
 const getTopicVideo = (topic) => {
@@ -1279,7 +1270,7 @@ const PricingSection = () => {
 // PRO DASHBOARD (Interfaccia Dedicata Pro)
 // ============================================
 const ProDashboard = () => {
-  const { userData, setCurrentView, setUserData } = useUser();
+  const { userData, setCurrentView, setUserData, addHours } = useUser();
   // Platform Logic
   // Platform Logic
   // SYSTEM_VERSION is now global to fix ReferenceError
