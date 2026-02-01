@@ -8,6 +8,9 @@ COPY package.json ./
 # Install ONLY dependencies needed for the server
 RUN npm install express cors stripe dotenv
 
+# Set Port specifically for Hugging Face
+ENV PORT=7860
+
 # Copy server code
 COPY server.js .
 
