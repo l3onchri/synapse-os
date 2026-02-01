@@ -1006,17 +1006,17 @@ const CoreSimulator = () => {
         {state === 'INPUT' && (
           <form onSubmit={handleSubmit} className="max-w-2xl mx-auto relative">
             <HUDCard className="p-2 rounded-xl">
-              <div className="flex items-center gap-3">
-                <Search className="w-5 h-5 text-slate-500 ml-4" />
+              <div className="flex items-center gap-2 md:gap-3">
+                <Search className="w-4 h-4 md:w-5 md:h-5 text-slate-500 ml-2 md:ml-4 shrink-0" />
                 <input type="text" value={query} onChange={e => setQuery(e.target.value)}
-                  placeholder={protocol === 'GUEST' ? "Seleziona un Protocollo..." : "Es. Storia..."}
-                  className="flex-1 px-4 py-4 bg-transparent text-white placeholder:text-slate-500 focus:outline-none font-mono" disabled={protocol === 'GUEST'} />
+                  placeholder={protocol === 'GUEST' ? "Protocollo..." : "Es. Storia..."}
+                  className="flex-1 w-full min-w-0 px-2 md:px-4 py-3 md:py-4 bg-transparent text-white placeholder:text-slate-500 focus:outline-none font-mono text-sm md:text-base" disabled={protocol === 'GUEST'} />
                 <button type="button" onClick={startListening} disabled={protocol === 'GUEST'}
-                  className={`p-3 rounded-lg transition-all ${isListening ? 'bg-[#f43f5e] text-white animate-pulse' : 'bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700'}`}>
-                  {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                  className={`p-2 md:p-3 rounded-lg transition-all shrink-0 ${isListening ? 'bg-[#f43f5e] text-white animate-pulse' : 'bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700'}`}>
+                  {isListening ? <MicOff className="w-4 h-4 md:w-5 md:h-5" /> : <Mic className="w-4 h-4 md:w-5 md:h-5" />}
                 </button>
-                <button type="submit" className={`px-6 py-3 font-bold rounded-lg transition-all mr-2 ${protocol === 'GUEST' ? 'bg-slate-700 text-slate-400' : 'bg-[#06b6d4] text-black hover:bg-[#22d3ee]'}`}>
-                  {protocol === 'GUEST' ? <Lock className="w-5 h-5" /> : <Zap className="w-5 h-5" />}
+                <button type="submit" className={`px-3 py-2 md:px-6 md:py-3 font-bold rounded-lg transition-all mr-1 md:mr-2 shrink-0 ${protocol === 'GUEST' ? 'bg-slate-700 text-slate-400' : 'bg-[#06b6d4] text-black hover:bg-[#22d3ee]'}`}>
+                  {protocol === 'GUEST' ? <Lock className="w-4 h-4 md:w-5 md:h-5" /> : <Zap className="w-4 h-4 md:w-5 md:h-5" />}
                 </button>
               </div>
             </HUDCard>
