@@ -56,3 +56,22 @@ Il sito web vero e proprio.
 
 ## Alternativa Rapida (Solo Frontend)
 Se non vuoi deployare il server, i pagamenti NON funzioneranno online, ma tutto il resto (AI, Auth) sì. In quel caso basta fare il punto 2 su Vercel.
+
+## 3. Aggiornare l'Applicazione (Deploy Aggiornamenti)
+Hai già configurato tutto? Ecco come mandare online le modifiche appena fatte (Voice Commander, Fix Video, ecc.).
+
+### Frontend (Vercel)
+Poiché Vercel è collegato a GitHub, basta fare push:
+```bash
+git add .
+git commit -m "update: synapse fixes"
+git push origin main
+```
+Vercel vedrà il cambiamento e farà un nuovo deploy automatico (ci mette circa 1 minuto).
+
+### Backend (Hugging Face)
+Se non hai modificato `server.js`, non serve fare nulla.
+Se invece devi aggiornarlo:
+1.  Apri il terminale.
+2.  Assicurati che lo Space sia clonat sul tuo PC, oppure usa l'interfaccia web di Hugging Face -> Files -> Upload File e carica il nuovo `server.js` sovrascrivendo quello vecchio.
+3.  Lo Space si riavvierà da solo.
