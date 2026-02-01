@@ -102,7 +102,9 @@ const UserProvider = ({ children }) => {
 
   // Persist to localStorage
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ protocol, credits, userData }));
+    // Ensure weeklyStats is valid
+    const safeUserData = { ...userData, weeklyStats: Array.isArray(userData.weeklyStats) && userData.weeklyStats.length === 7 ? userData.weeklyStats : [0, 0, 0, 0, 0, 0, 0] };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ protocol, credits, userData: safeUserData }));
   }, [protocol, credits, userData]);
 
   // Daily credit reset for Core
@@ -1547,7 +1549,7 @@ const ProDashboard = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
             { label: 'XP Totali', value: userData.xp, color: '#8b5cf6', icon: Sparkles },
-            { label: 'Ore Studio', value: `${userData.hours}h`, color: '#06b6d4', icon: Clock },
+            { label: 'Ore Studio', value: `${(userData.hours || 0).toFixed(1)}h`, color: '#06b6d4', icon: Clock },
             { label: 'Streak', value: `${userData.streak} giorni`, color: '#10b981', icon: Zap },
             { label: 'Ricerche', value: '∞', color: '#f59e0b', icon: Search },
           ].map((stat, i) => (
@@ -1581,18 +1583,47 @@ const ProDashboard = () => {
           {/* Overview */}
           {activeTab === 'overview' && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <HUDCard className="p-6 rounded-2xl col-span-2">
-                <h3 className="text-white font-bold mb-4 flex items-center gap-2"><TrendingUp className="w-5 h-5 text-[#10b981]" />Attività Settimanale</h3>
-                <div className="h-40 flex items-end gap-2">
+              <HUDCard className="p-6 rounded-2xl col-span-2 relative overflow-hidden">
+                <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
+                <div className="flex items-center justify-between mb-8 relative z-10">
+                  <h3 className="text-white font-bold flex items-center gap-2"><TrendingUp className="w-5 h-5 text-[#10b981]" />Attività Settimanale</h3>
+                  <div className="text-xs font-mono text-slate-400">TOTALE: {(userData.hours || 0).toFixed(1)}h</div>
+                </div>
+
+                <div className="h-48 flex items-end justify-between gap-2 md:gap-4 relative z-10 pl-2">
                   {['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((d, i) => {
-                    // Real Data Visualization
                     const val = (userData.weeklyStats && userData.weeklyStats[i]) || 0;
-                    // Scaing: 1h = ~20% height. Min 4% visibility.
-                    const h = Math.min(100, Math.max(4, val * 20));
-                    return (<div key={d} className="flex-1 flex flex-col items-center gap-2">
-                      <div className="w-full bg-slate-800 rounded-t transition-all duration-1000" style={{ height: `${h || 2}%`, background: `linear-gradient(to top, #8b5cf6, #06b6d4)` }} />
-                      <span className="text-xs text-slate-500">{d}</span>
-                    </div>);
+                    const maxVal = Math.max(1, ...(userData.weeklyStats || [1])); // Avoid div by 0
+                    const barHeight = Math.min(100, (val / maxVal) * 100); // Normalize to max of week
+                    const isToday = i === (new Date().getDay() === 0 ? 6 : new Date().getDay() - 1);
+
+                    return (
+                      <div key={d} className="flex-1 flex flex-col items-center group relative">
+                        {/* Hover Value */}
+                        <div className={`absolute -top-8 text-xs font-bold transition-all ${val > 0 ? 'text-white' : 'text-slate-600 opacity-0 group-hover:opacity-100'}`}>
+                          {val.toFixed(1)}h
+                        </div>
+
+                        {/* Bar */}
+                        <div className="w-full relative flex items-end justify-center rounded-t-lg overflow-hidden bg-slate-800/50 h-32 md:h-40">
+                          <div
+                            className={`w-full transition-all duration-1000 ease-out relative ${isToday ? 'bg-[#10b981]' : 'bg-[#8b5cf6]'}`}
+                            style={{
+                              height: `${Math.max(4, barHeight)}%`, // Min height 4% for visuals
+                              opacity: isToday ? 1 : 0.7,
+                              boxShadow: isToday ? '0 0 20px rgba(16, 185, 129, 0.4)' : 'none'
+                            }}
+                          >
+                            {isToday && <div className="absolute top-0 left-0 w-full h-[1px] bg-white/50" />}
+                          </div>
+                        </div>
+
+                        {/* Label */}
+                        <div className={`mt-3 text-[10px] md:text-xs font-mono uppercase tracking-wider ${isToday ? 'text-[#10b981] font-bold' : 'text-slate-500'}`}>
+                          {d}
+                        </div>
+                      </div>
+                    );
                   })}
                 </div>
               </HUDCard>
