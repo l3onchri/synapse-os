@@ -1345,8 +1345,6 @@ const ProDashboard = () => {
   const [videoSearching, setVideoSearching] = useState(false);
   const [currentVideo, setCurrentVideo] = useState({ id: SYSTEM_CONFIG.FALLBACK_VIDEO_ID, title: 'La Rivoluzione Francese - Documentario Completo', topic: 'Rivoluzione Francese' });
   const [videoQueue, setVideoQueue] = useState([
-    { id: 'HEheh1bh34Q', title: 'Il Sistema Solare', duration: '12:00' },
-    { id: '5bK3i3_N7tM', title: 'Dante Alighieri - Vita e Opere', duration: '15:00' },
     { id: '2U_YdZD5kkM', title: 'Napoleone Bonaparte', duration: '18:00' },
     { id: 'Y9EjnBmO2Jw', title: 'I Principi della Dinamica', duration: '10:00' },
   ]);
@@ -1579,7 +1577,8 @@ const ProDashboard = () => {
                   {['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((d, i) => {
                     // Distribute total hours roughly across week for viz
                     const avgDaily = userData.hours / 7;
-                    const h = Math.min(100, (avgDaily + (Math.random() * avgDaily * 0.5)) * 10);
+                    // Scale up significantly for visibility. If > 0, ensure at least 20% height.
+                    const h = userData.hours > 0 ? Math.min(100, (avgDaily * 30) + 15 + (Math.random() * 10)) : 4;
                     return (<div key={d} className="flex-1 flex flex-col items-center gap-2">
                       <div className="w-full bg-slate-800 rounded-t transition-all duration-1000" style={{ height: `${h || 2}%`, background: `linear-gradient(to top, #8b5cf6, #06b6d4)` }} />
                       <span className="text-xs text-slate-500">{d}</span>
