@@ -1886,7 +1886,10 @@ const AppContent = () => {
   // Landing Page (Guest or Core)
   if (currentView === 'LANDING' || protocol !== 'PRO') {
     return (
-      <div className="min-h-screen bg-[#020617] relative overflow-hidden text-slate-300 font-sans selection:bg-[#8b5cf6] selection:text-white">
+      <div className="min-h-screen bg-[#020617] relative overflow-hidden text-slate-300 font-sans selection:bg-[#8b5cf6] selection:text-white border-8 border-red-600">
+        <div className="absolute top-0 left-0 w-full bg-red-600 text-white font-bold text-center z-50 animate-pulse">
+          DEBUG MODE: VERSIÓN 1.0.5 - SE VEDI QUESTO È AGGIORNATO
+        </div>
         <NeuralVoid />
         <NeuralCanvas />
         <Header />
