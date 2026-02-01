@@ -531,7 +531,7 @@ const StripeCheckout = ({ clientSecret }) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: 'http://localhost:5173', // Redirects here after payment
+        return_url: 'https://www.sinapsi-os.lat', // Redirects here after payment
       },
       redirect: 'if_required'
     });
@@ -895,7 +895,7 @@ const CoreSimulator = () => {
           headers: {
             "Authorization": `Bearer ${SYSTEM_CONFIG.OPENROUTER_KEY}`,
             "Content-Type": "application/json",
-            "HTTP-Referer": "http://localhost:5176",
+            "HTTP-Referer": "https://www.sinapsi-os.lat",
             "X-Title": "Synapse OS"
           },
           body: JSON.stringify({
@@ -1274,7 +1274,7 @@ const ProDashboard = () => {
         headers: {
           "Authorization": `Bearer ${SYSTEM_CONFIG.OPENROUTER_KEY}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost:5173",
+          "HTTP-Referer": "https://www.sinapsi-os.lat",
           "X-Title": "Synapse OS"
         },
         body: JSON.stringify({
@@ -1336,7 +1336,7 @@ const ProDashboard = () => {
         headers: {
           "Authorization": `Bearer ${SYSTEM_CONFIG.OPENROUTER_KEY}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost:5173",
+          "HTTP-Referer": "https://www.sinapsi-os.lat",
           "X-Title": "Synapse OS"
         },
         body: JSON.stringify({
@@ -1385,7 +1385,7 @@ const ProDashboard = () => {
         headers: {
           "Authorization": `Bearer ${SYSTEM_CONFIG.OPENROUTER_KEY}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost:5173",
+          "HTTP-Referer": "https://www.sinapsi-os.lat",
           "X-Title": "Synapse OS"
         },
         body: JSON.stringify({
