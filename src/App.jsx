@@ -713,24 +713,24 @@ const VIDEO_DATABASE = {
       hint: "Un'isola remota nell'Oceano Atlantico meridionale."
     }
   },
-  'storia': {
-    id: 'd_kS3x0lJ4k',
-    title: 'La Prima Guerra Mondiale (In 5 minuti)',
-    summary: "GRANDE GUERRA (1914-1918): Scatenata dall'attentato di Sarajevo. \nSCHIERAMENTI: Triplice Intesa vs Imperi Centrali. \nCARATTERISTICHE: Guerra di trincea, logoramento. \nESITO: Crollo di 4 imperi, nascita di nuovi stati.",
+  'astronomia': {
+    id: 'HEheh1bh34Q',
+    title: 'Il Sistema Solare (Hub Scuola)',
+    summary: "SISTEMA SOLARE: Insieme di corpi celesti mantenuti in orbita dalla gravità del Sole. \nCOMPOSIZIONE: Sole (stella madre), 8 pianeti (rocciosi e gassosi), asteroidi, comete. \nPIANETI: Mercurio, Venere, Terra, Marte, Giove, Saturno, Urano, Nettuno. \nMOTI: Rotazione (giorno/notte) e Rivoluzione (anni/stagioni).",
     quiz: {
-      question: "Quale evento fece scoppiare la guerra?",
-      options: [{ text: "Invasione della Polonia", correct: false }, { text: "Attentato di Sarajevo", correct: true }, { text: "Presa della Bastiglia", correct: false }],
-      hint: "L'assassinio dell'Arciduca Francesco Ferdinando."
+      question: "Qual è il pianeta più grande?",
+      options: [{ text: "Terra", correct: false }, { text: "Giove", correct: true }, { text: "Saturno", correct: false }],
+      hint: "È un gigante gassoso con una Grande Macchia Rossa."
     }
   },
-  'chimica': {
-    id: '4g7t7q4j5_g',
-    title: 'La Tavola Periodica - Spiegazione Semplice',
-    summary: "STRUTTURA: Organizza gli elementi chimici ordinati per numero atomico (Z). \nGRUPPI E PERIODI: Le colonne (gruppi) hanno proprietà simili. \nCLASSIFICAZIONE: Metalli, Non metalli, Gas Nobili. Fondamentale per la chimica.",
+  'letteratura': {
+    id: '5bK3i3_N7tM',
+    title: 'Dante Alighieri - Vita e Opere',
+    summary: "DANTE (1265-1321): Padre della lingua italiana. \nOPERA PRINCIPALE: La Divina Commedia. \nSTILE: Dolce Stil Novo. \nTEMI: Amore per Beatrice, politica (Guelfi Bianchi), esilio da Firenze. Il suo viaggio rappresenta il cammino dell'anima verso Dio.",
     quiz: {
-      question: "Come sono ordinati gli elementi nella tavola?",
-      options: [{ text: "Per data di scoperta", correct: false }, { text: "Per numero atomico crescente", correct: true }, { text: "Alfabeticamente", correct: false }],
-      hint: "Il numero di protoni nel nucleo decide la posizione."
+      question: "Quale città ha esiliato Dante?",
+      options: [{ text: "Roma", correct: false }, { text: "Firenze", correct: true }, { text: "Napoli", correct: false }],
+      hint: "La sua città natale, culla del Rinascimento."
     }
   },
   'matematica': {
@@ -1293,7 +1293,6 @@ const ProDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [isListening, setIsListening] = useState(false);
   const [voiceQuery, setVoiceQuery] = useState('');
-  const [searchHistory, setSearchHistory] = useState([]);
   const [memoryCards, setMemoryCards] = useState([]);
   const [flippedCard, setFlippedCard] = useState(null);
   const [cardTopic, setCardTopic] = useState('');
@@ -1346,13 +1345,10 @@ const ProDashboard = () => {
   const [videoSearching, setVideoSearching] = useState(false);
   const [currentVideo, setCurrentVideo] = useState({ id: SYSTEM_CONFIG.FALLBACK_VIDEO_ID, title: 'La Rivoluzione Francese - Documentario Completo', topic: 'Rivoluzione Francese' });
   const [videoQueue, setVideoQueue] = useState([
-    { id: '3d3i1d33i', title: 'Fisica Quantistica - Spiegazione Veloce', duration: '15:00' }, // Placeholder ID replaced if real ones needed, but let's try to be safer or keep specific ones if known. 
-    // Actually, let's use some real educational IDs if possible or keep them if they were working placeholders. 
-    // The user said "dei video suggeriti nella coda, risultano non disponibili".
-    // I will replace them with the ones from VIDEO_DATABASE or known working ones.
-    { id: 'Y9EjnBmO2Jw', title: 'I Principi della Dinamica', duration: '10:00' },
+    { id: 'HEheh1bh34Q', title: 'Il Sistema Solare', duration: '12:00' },
+    { id: '5bK3i3_N7tM', title: 'Dante Alighieri - Vita e Opere', duration: '15:00' },
     { id: '2U_YdZD5kkM', title: 'Napoleone Bonaparte', duration: '18:00' },
-    { id: 'd_kS3x0lJ4k', title: 'La Prima Guerra Mondiale', duration: '12:00' },
+    { id: 'Y9EjnBmO2Jw', title: 'I Principi della Dinamica', duration: '10:00' },
   ]);
 
   // Support Chat State
@@ -1497,7 +1493,6 @@ const ProDashboard = () => {
           // Use distinct delay and pass topic directly if needed, but state update might be enough if enough delay.
           // Better: call searchVideo directly with the topic if we refactored searchVideo to accept an arg.
           // Since searchVideo uses state `videoTopic`, we must wait for state to settle.
-          // BUT, `setVideoTopic` is async. 
           // Let's force it by not relying on state inside searchVideo immediately if we could? 
           // Actually, React state updates are batched. 
           // Let's just increase delay slightly or better yet, make search check the arg.
@@ -1595,10 +1590,10 @@ const ProDashboard = () => {
               <HUDCard className="p-6 rounded-2xl">
                 <h3 className="text-white font-bold mb-4 flex items-center gap-2"><Search className="w-5 h-5 text-[#06b6d4]" />Ricerche Recenti</h3>
                 <div className="space-y-3">
-                  {searchHistory.length === 0 ? <div className="text-slate-500 text-sm italic py-4 text-center">Nessuna ricerca recente</div> : searchHistory.map((s, i) => (
+                  {(!userData.history || userData.history.length === 0) ? <div className="text-slate-500 text-sm italic py-4 text-center">Nessuna ricerca recente</div> : (userData.history || []).slice().reverse().slice(0, 5).map((s, i) => (
                     <div key={i} className="flex justify-between items-center text-sm">
-                      <span className="text-slate-300">{s.query}</span>
-                      <span className="text-xs text-slate-500">{s.results} risultati</span>
+                      <span className="text-slate-300">{s.topic}</span>
+                      <span className="text-xs text-slate-500">{s.date}</span>
                     </div>
                   ))}</div>
               </HUDCard>
