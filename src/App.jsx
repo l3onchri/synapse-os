@@ -716,7 +716,7 @@ const VIDEO_DATABASE = {
   'storia': {
     id: 'd_kS3x0lJ4k',
     title: 'La Prima Guerra Mondiale (In 5 minuti)',
-    summary: "GRANDE GUERRA (1914-1918): Scatenata dall'attentato di Sarajevo. \nSCHIERAMENTI: Triplice Intesa (Francia, UK, Russia, poi Italia/USA) vs Imperi Centrali (Austria, Germania). \nCARATTERISTICHE: Guerra di trincea, logoramento, nuove armi (gas, aerei, carri). \nESITO: Crollo di 4 imperi, nascita di nuovi stati, riassetto dell'Europa con Versailles.",
+    summary: "GRANDE GUERRA (1914-1918): Scatenata dall'attentato di Sarajevo. \nSCHIERAMENTI: Triplice Intesa vs Imperi Centrali. \nCARATTERISTICHE: Guerra di trincea, logoramento. \nESITO: Crollo di 4 imperi, nascita di nuovi stati.",
     quiz: {
       question: "Quale evento fece scoppiare la guerra?",
       options: [{ text: "Invasione della Polonia", correct: false }, { text: "Attentato di Sarajevo", correct: true }, { text: "Presa della Bastiglia", correct: false }],
@@ -724,9 +724,9 @@ const VIDEO_DATABASE = {
     }
   },
   'chimica': {
-    id: '?listType=search&list=Tavola+Periodica+Spiegazione+Semplice',
-    title: 'La Tavola Periodica degli Elementi',
-    summary: "STRUTTURA: Organizza gli elementi chimici ordinati per numero atomico (Z). \nGRUPPI E PERIODI: Le colonne (gruppi) hanno proprietà simili; le righe (periodi) indicano il livello energetico. \nCLASSIFICAZIONE: Metalli (sinistra), Non metalli (destra), Gas Nobili (ultima colonna, stabili). Fondamentale per prevedere le reazioni chimiche.",
+    id: '4g7t7q4j5_g',
+    title: 'La Tavola Periodica - Spiegazione Semplice',
+    summary: "STRUTTURA: Organizza gli elementi chimici ordinati per numero atomico (Z). \nGRUPPI E PERIODI: Le colonne (gruppi) hanno proprietà simili. \nCLASSIFICAZIONE: Metalli, Non metalli, Gas Nobili. Fondamentale per la chimica.",
     quiz: {
       question: "Come sono ordinati gli elementi nella tavola?",
       options: [{ text: "Per data di scoperta", correct: false }, { text: "Per numero atomico crescente", correct: true }, { text: "Alfabeticamente", correct: false }],
@@ -914,7 +914,7 @@ const CoreSimulator = () => {
             "messages": [
               {
                 "role": "system",
-                "content": "You are Synapse OS, an advanced education interface. Analyze the user topic and return a STRICT JSON object (no markdown). Structure: { \"summary\": \"Comprehensive summary (8-10 sentences).\", \"notes\": [\"Point 1\", \"Point 2\", \"Point 3\"], \"videoSearchQuery\": \"${topic} documentario scuola\", \"quiz\": [ { \"question\": \"Q1?\", \"options\": [{\"text\":\"A\",\"correct\":false}, {\"text\":\"B\",\"correct\":true}, {\"text\":\"C\",\"correct\":false}], \"hint\": \"H1\" }, { \"question\": \"Q2?\", \"options\": [...], \"hint\": \"...\" }, { \"question\": \"Q3?\", \"options\": [...], \"hint\": \"...\" }, { \"question\": \"Q4?\", \"options\": [...], \"hint\": \"...\" }, { \"question\": \"Q5?\", \"options\": [...], \"hint\": \"...\" } ], \"planner\": [{\"time\":\"15:00\",\"task\":\"Deep Work\",\"details\":\"Study concept X and Y\",\"duration\":\"45m\"},{\"time\":\"16:00\",\"task\":\"Review\",\"details\":\"Test knowledge\",\"duration\":\"30m\"}] }. Notes: Quiz MUST have exactly 5 questions. Each question MUST have 3 options. Language: ITALIAN."
+                "content": `You are Synapse OS, an advanced education interface. Analyze the user topic and return a STRICT JSON object (no markdown). the current time is ${new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}. Schedule planner tasks to start AFTER the current time. Subject must be one of: "Storia", "Scienze", "Matematica", "Letteratura", "Inglese", "Informatica", "Altro". Structure: { "summary": "Comprehensive summary (8-10 sentences).", "notes": ["Point 1", "Point 2", "Point 3"], "videoSearchQuery": "${searchQuery} documentario scuola", "subject": "Materia", "quiz": [ { "question": "Q1?", "options": [{"text":"A","correct":false}, {"text":"B","correct":true}, {"text":"C","correct":false}], "hint": "H1" }, { "question": "Q2?", "options": [...], "hint": "..." }, { "question": "Q3?", "options": [...], "hint": "..." }, { "question": "Q4?", "options": [...], "hint": "..." }, { "question": "Q5?", "options": [...], "hint": "..." } ], "planner": [{"time":"HH:MM","task":"Deep Work","details":"Study concept X and Y","duration":"45m"},{"time":"HH:MM","task":"Review","details":"Test knowledge","duration":"30m"}] }. Notes: Quiz MUST have exactly 5 questions. Each question MUST have 3 options. Language: ITALIAN.`
               },
               {
                 "role": "user",
@@ -972,10 +972,10 @@ const CoreSimulator = () => {
               planner: [...(prev.planner || []), ...(aiContent.planner || [])], // Append new tasks
               history: [...(prev.history || []), newReport], // Append to history
               weeklyReport: newReport, // Keep latest for immediate view
-              // Simple heuristic to guess subject for stats
+              // AI Based subject Stats
               stats: {
                 ...prev.stats,
-                [searchQuery.length > 5 ? 'Scienze' : 'Storia']: (prev.stats?.[searchQuery.length > 5 ? 'Scienze' : 'Storia'] || 0) + 10
+                [aiContent.subject || 'Altro']: (prev.stats?.[aiContent.subject || 'Altro'] || 0) + 10
               }
             };
           });
@@ -1222,7 +1222,7 @@ const ParentsDashboard = () => {
             </div>
           </div>
           <div>
-            <div className="text-slate-400 text-xs font-mono mb-4">RIPARTIZIONE MATERIE (SIMULATA)</div>
+            <div className="text-slate-400 text-xs font-mono mb-4">RIPARTIZIONE MATERIE</div>
             <div className="space-y-3">{Object.entries(userData.stats || {}).map(([key, val], i) => (
               <div key={i}><div className="flex justify-between text-xs text-slate-300 mb-1"><span>{key}</span><span>{val}%</span></div><div className="w-full h-1 bg-slate-700 rounded-full overflow-hidden"><div className="h-full" style={{ width: `${Math.min(100, val)}%`, background: i % 2 === 0 ? '#8b5cf6' : '#06b6d4' }} /></div></div>
             ))}</div>
