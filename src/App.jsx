@@ -354,7 +354,7 @@ const LiveTicker = () => {
     '[LIVE] User_Sara: 5 ore di Deep Work questa settimana',
   ];
   return (
-    <div className="fixed top-[72px] left-0 right-0 z-40 bg-[#020617]/80 backdrop-blur-sm border-b border-white/5 overflow-hidden">
+    <div className="fixed top-[88px] left-0 right-0 z-40 bg-[#020617]/80 backdrop-blur-sm border-b border-white/5 overflow-hidden">
       <div className="ticker-track flex">
         {[...messages, ...messages].map((msg, i) => (
           <span key={i} className="ticker-item font-mono text-xs text-slate-500 whitespace-nowrap px-8 py-2">
