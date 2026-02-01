@@ -94,6 +94,7 @@ const UserProvider = ({ children }) => {
     history: [],
     weeklyReport: null,
     stats: { 'Storia': 0, 'Scienze': 0, 'Matematica': 0 },
+    weeklyStats: [0, 0, 0, 0, 0, 0, 0], // Lun-Dom
     ...(stored?.userData || {})
   });
 
@@ -179,7 +180,18 @@ const UserProvider = ({ children }) => {
   const [showAuth, setShowAuth] = useState(false);
 
   const addXP = (amount) => setUserData(prev => ({ ...prev, xp: (prev.xp || 0) + amount }));
-  const addHours = (amount) => setUserData(prev => ({ ...prev, hours: (prev.hours || 0) + amount }));
+  const addHours = (amount) => setUserData(prev => {
+    const dayIndex = new Date().getDay(); // 0=Sun, 1=Mon...
+    // Map to 0=Mon, 6=Sun
+    const mapIdx = dayIndex === 0 ? 6 : dayIndex - 1;
+    const newStats = [...(prev.weeklyStats || [0, 0, 0, 0, 0, 0, 0])];
+    newStats[mapIdx] = (newStats[mapIdx] || 0) + amount;
+    return {
+      ...prev,
+      hours: (prev.hours || 0) + amount,
+      weeklyStats: newStats
+    };
+  });
 
   return (
     <UserContext.Provider value={{
@@ -713,26 +725,7 @@ const VIDEO_DATABASE = {
       hint: "Un'isola remota nell'Oceano Atlantico meridionale."
     }
   },
-  'astronomia': {
-    id: 'HEheh1bh34Q',
-    title: 'Il Sistema Solare (Hub Scuola)',
-    summary: "SISTEMA SOLARE: Insieme di corpi celesti mantenuti in orbita dalla gravità del Sole. \nCOMPOSIZIONE: Sole (stella madre), 8 pianeti (rocciosi e gassosi), asteroidi, comete. \nPIANETI: Mercurio, Venere, Terra, Marte, Giove, Saturno, Urano, Nettuno. \nMOTI: Rotazione (giorno/notte) e Rivoluzione (anni/stagioni).",
-    quiz: {
-      question: "Qual è il pianeta più grande?",
-      options: [{ text: "Terra", correct: false }, { text: "Giove", correct: true }, { text: "Saturno", correct: false }],
-      hint: "È un gigante gassoso con una Grande Macchia Rossa."
-    }
-  },
-  'letteratura': {
-    id: '5bK3i3_N7tM',
-    title: 'Dante Alighieri - Vita e Opere',
-    summary: "DANTE (1265-1321): Padre della lingua italiana. \nOPERA PRINCIPALE: La Divina Commedia. \nSTILE: Dolce Stil Novo. \nTEMI: Amore per Beatrice, politica (Guelfi Bianchi), esilio da Firenze. Il suo viaggio rappresenta il cammino dell'anima verso Dio.",
-    quiz: {
-      question: "Quale città ha esiliato Dante?",
-      options: [{ text: "Roma", correct: false }, { text: "Firenze", correct: true }, { text: "Napoli", correct: false }],
-      hint: "La sua città natale, culla del Rinascimento."
-    }
-  },
+  // REMOVED: Dante Alighieri & Sistema Solare as requested
   'matematica': {
     id: '?listType=search&list=Equazioni+Primo+Grado+Spiegazione',
     title: 'Equazioni Lineari (Algebra)',
@@ -1607,10 +1600,10 @@ const ProDashboard = () => {
                 <h3 className="text-white font-bold mb-4 flex items-center gap-2"><TrendingUp className="w-5 h-5 text-[#10b981]" />Attività Settimanale</h3>
                 <div className="h-40 flex items-end gap-2">
                   {['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'].map((d, i) => {
-                    // Distribute total hours roughly across week for viz
-                    const avgDaily = userData.hours / 7;
-                    // Scale up significantly for visibility. If > 0, ensure at least 20% height. (v2 fix)
-                    const h = userData.hours > 0 ? Math.min(100, (avgDaily * 30) + 15 + (Math.random() * 10)) : 4;
+                    // Real Data Visualization
+                    const val = (userData.weeklyStats && userData.weeklyStats[i]) || 0;
+                    // Scaing: 1h = ~20% height. Min 4% visibility.
+                    const h = Math.min(100, Math.max(4, val * 20));
                     return (<div key={d} className="flex-1 flex flex-col items-center gap-2">
                       <div className="w-full bg-slate-800 rounded-t transition-all duration-1000" style={{ height: `${h || 2}%`, background: `linear-gradient(to top, #8b5cf6, #06b6d4)` }} />
                       <span className="text-xs text-slate-500">{d}</span>
